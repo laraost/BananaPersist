@@ -1,0 +1,2 @@
+option('fallback-operator', type: 'boolean', value: false,
+       description: 'Use the fallback operator<< for std::chrono::duration types')

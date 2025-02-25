@@ -1,0 +1,7 @@
+build/
+conf/
+.vscode
+.cache
+.clangd
+test*
+!test
