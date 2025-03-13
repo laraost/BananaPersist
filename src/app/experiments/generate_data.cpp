@@ -70,6 +70,10 @@ int main(int argc, char** argv) {
             std::cerr << "Need at least 4 items for topological maintenance worst-case\n";
             return 1;
         }
+        if (num_items % 4 != 0) {
+            std::cerr << "Number of items needs to be a multiple of 4 for topological maintenance worst-case.\n";
+            return 1;
+        }
         random_number_generator rng{seed};
         topological_worst_case_generator<false> gen{{rng, gen_param_string}};
         gen(values, num_items);
@@ -78,12 +82,8 @@ int main(int argc, char** argv) {
             std::cerr << "Need at least 4 items for topological maintenance worst-case\n";
             return 1;
         }
-        if (num_items % 2 == 0) {
-            std::cerr << "Need an odd number of items for topological maintenance worst-case\n";
-            return 1;
-        }
-        if ((num_items/2) % 2 != 0) {
-            std::cerr << "Number of items needs to be a multiple of 4 plus 1 for topological maintenance worst-case.\n";
+        if (num_items % 4 != 0) {
+            std::cerr << "Number of items needs to be a multiple of 4 for topological maintenance worst-case.\n";
             return 1;
         }
         random_number_generator rng{seed};

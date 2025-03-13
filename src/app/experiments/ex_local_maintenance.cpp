@@ -246,7 +246,7 @@ int main(int argc, char** argv) {
 
     CLI::App app("Construction Experiments");
 
-    add_num_items_option(app, num_item_limits) -> required();
+    add_logspace_num_items_option(app, num_item_limits) -> required();
     add_seed_option(app, seed);
     add_num_reps_option(app, num_reps);
     add_gudhi_flag(app, run_gudhi);
@@ -272,7 +272,7 @@ int main(int argc, char** argv) {
     CLI11_PARSE(app, argc, argv);
 
     if (num_item_limits[0] < 2 || num_item_limits[1] == 0 || num_item_limits[2] < num_item_limits[0]) {
-        std::cerr << "num_items needs to be of the form min step max, with min >= 2, step >= 1 and max >= min.\n";
+        std::cerr << "num_items needs to be of the form min number_of_steps max, with min >= 2, number_of_steps >= 1 and max >= min.\n";
         std::cerr << app.help() << std::endl;
         return 1;
     }

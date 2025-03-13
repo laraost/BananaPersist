@@ -252,7 +252,7 @@ int main(int argc, char** argv) {
 
     add_seed_option(app, seed);
     add_num_reps_option(app, num_reps);
-    add_num_items_option(app, num_item_limits) -> required();
+    add_logspace_num_items_option(app, num_item_limits) -> required();
     add_gudhi_flag(app, run_gudhi);
     add_persistence1d_flag(app, run_persistence1d);
     auto* gen_opt = add_gen_args_option(app, generator_args);
@@ -275,7 +275,7 @@ int main(int argc, char** argv) {
     const auto step_num_items = num_item_limits[1];
     const auto max_num_items = num_item_limits[2];
     if (min_num_items < 2 || step_num_items == 0 || max_num_items < min_num_items) {
-        std::cerr << "num_items needs to be of the form min step max, with min >= 2, step >= 1 and max >= min.\n";
+        std::cerr << "num_items needs to be of the form min number_of_steps max, with min >= 2, number_of_steps >= 1 and max >= min.\n";
         std::cerr << app.help() << std::endl;
         return 1;
     }
@@ -334,18 +334,18 @@ int main(int argc, char** argv) {
         std::cout << "# Linear-time case for cutting.\n";
         for (auto num_items: logspace_items) {
             // Need an odd number of items
-            if (num_items % 2 == 0) {
+            if (num_items % 2 != 0) {
                 num_items++;
             }
-            if (num_items % 4 != 1) {
+            if (num_items % 4 != 0) {
                 num_items += 2;
             }
-            massert(num_items % 4 == 1, "Expected number of items to be a number divisible by 4 plus 1.");
+            massert(num_items % 4 == 0, "Expected number of items to be divisible by 4.");
             cut_experiment<topological_worst_case_generator<false, decltype(rng)>>(num_items, 0.5, {rng, gen_param_string}, num_reps, run_gudhi, run_persistence1d);
             std::cout << "--\n";
         }
     } else if (app.got_subcommand(wc_glue_app)) {
-        if (*gen_opt && gen_name != topological_worst_case_generator<true>::get_name()) {
+        if (*gen_opt && gen_name != topological_worst_case_generator<false>::get_name()) {
             std::cerr << "wc-glue app requires cut-wc generator.\n";
             return 1;
         }
@@ -356,14 +356,14 @@ int main(int argc, char** argv) {
         std::cout << "# Linear-time case for gluing.\n";
         for (auto num_items: logspace_items) {
             // Need an odd number of items
-            if (num_items % 2 == 0) {
+            if (num_items % 2 != 0) {
                 num_items++;
             }
-            if (num_items % 4 != 1) {
+            if (num_items % 4 != 0) {
                 num_items += 2;
             }
-            massert(num_items % 4 == 1, "Expected number of items to be a number divisible by 4 plus 1.");
-            glue_experiment<topological_worst_case_generator<true, decltype(rng)>>(num_items, 0.5, {rng, gen_param_string}, num_reps, run_gudhi, run_persistence1d);
+            massert(num_items % 4 == 0, "Expected number of items to be divisible by 4.");
+            glue_experiment<topological_worst_case_generator<false, decltype(rng)>>(num_items, 0.5, {rng, gen_param_string}, num_reps, run_gudhi, run_persistence1d);
             std::cout << "--\n";
         }
     }

@@ -33,6 +33,12 @@ inline CLI::Option* add_num_items_option(CLI::App& app, std::array<size_t, 3>& n
                           "Number of items in the form 'min step max'");
 }
 
+inline CLI::Option* add_logspace_num_items_option(CLI::App& app, std::array<size_t, 3>& num_item_limits) {
+    return app.add_option("num_items",
+                          num_item_limits,
+                          "Number of items in the form 'min number_of_steps max'; uniformly spaced on a logarithmic scale");
+}
+
 inline CLI::Option* add_gen_args_option(CLI::App& app, std::string& generator_args) {
     return app.add_option("--gen-args",
                           generator_args,

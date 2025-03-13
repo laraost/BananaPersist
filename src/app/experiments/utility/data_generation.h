@@ -450,12 +450,11 @@ struct topological_worst_case_generator {
             decrease = false;
             long value = 1;
             auto size_offset = two_stage ? values.size() : 0;
-            while (values.size() < target_size  - 1 + size_offset) {
-                values.push_back(static_cast<function_value_type>(value) + 0.1);
-                values.push_back(static_cast<function_value_type>(-value) + 0.1);
+            while (values.size() < target_size + size_offset) {
+                values.push_back(static_cast<function_value_type>(value) - 0.1);
+                values.push_back(static_cast<function_value_type>(-value) - 0.1);
                 value++;
             }
-            values.push_back(static_cast<function_value_type>(value) + 0.1);
         }
         if (noise_amount != 0) {
             auto scale = stage_size/2;

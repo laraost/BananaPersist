@@ -1,6 +1,6 @@
 # Banana Trees
 
-This implements the banana tree data structure introduced by Cultrera di Montesano, Edelsbrunner, Henzinger and Ost at SODA 2024.
+This implements the banana tree data structure introduced in Cultrera di Montesano et al. "Dynamically Maintaining the Persistent Homology of Time Series" at SODA 2024.
 
 # Build Instructions
 
@@ -39,9 +39,8 @@ The paramters $m$ and $D$ are user specified (`-m` and `-d`, respectively).
 The size of the left interval relative to the total time series is given by the option `-c`.
 
 Both `ex_local_maintenance` and `ex_topological_maintenance` can run worst-case scenarios by selecting the appropriate subcommand.
-The `num_items` option works slightly differently in these executables than described in the help string:
-the format is `min number_of_divisions max`; `number_of_divisions` values are selected from the interval `[min, max]`,
-such that they are spaced evenly on a logarithmic scale.
+They use the correct generator by default.
+To mix a random walk into the input, use generators `local-wc` and `cut-wc`, respectively, with the appropriate options; see `docs/generators.md` for details.
 
 `ex_time_series construct` reads a time series from standard input in the form of a sequence of function values and constructs the banana tree.
 
@@ -53,5 +52,27 @@ This output can be converted into a csv-file using the python script `tools/stru
 # License
 
 This repository, except files in `ext/`, is published under the MIT license.
-
 See the files in `ext/` for the respective licenses.
+
+If you publish results using our algorithms, please acknowledge our work by citing the corresponding papers:
+```
+@inproceedings{cultrera24,
+  author = {Sebastiano Cultrera di Montesano and Herbert Edelsbrunner and Monika Henzinger and Lara Ost},
+  title = {Dynamically Maintaining the Persistent Homology of Time Series},
+  booktitle = {Proceedings of the 2024 Annual ACM-SIAM Symposium on Discrete Algorithms (SODA)},
+  year = {2024},
+  chapter = {},
+  pages = {243-295},
+  doi = {10.1137/1.9781611977912.11},
+}
+@misc{ost25,
+  title={Banana Trees for the Persistence in Time Series Experimentally}, 
+  author={Lara Ost and Sebastiano Cultrera di Montesano and Herbert Edelsbrunner},
+  year={2025},
+  eprint={2405.17920},
+  archivePrefix={arXiv},
+  primaryClass={cs.DS},
+  note={To appear},
+  url={https://arxiv.org/abs/2405.17920}
+}
+```
